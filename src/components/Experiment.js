@@ -121,7 +121,7 @@ export default class ExperimentSST extends React.Component {
                     training_block={this.state.training_block} 
                     end_of_sst_block = {this.end_of_sst_block}
                     arrows_distribution = {this.arrows_distribution[1]}
-                    trials_amount={2}
+                    trials_amount={10}
                     block_number = {this.block_number}
                     last_block = {this.state.block_remains===1}
                     />}
