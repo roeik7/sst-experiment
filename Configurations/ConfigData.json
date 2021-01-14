@@ -1,0 +1,23 @@
+{
+  "blocks_amount":2,
+  "trials_amount": 8,
+  "training_trials_amount":4,
+  "questions": ["what is your nam?", "computer", "eye", "car", "water", "languege", "money", "sport"],
+  "answers": [["ro", "roei"], ["bla", "screen"], ["blue", "red"], ["audi", "nisan"], ["blue", "clean"], ["book", "english"],["dollar", "green"],["footbal", "ball"]],
+  "go_time": 2000,
+  "ssd_time" : 750,
+  "stop_signal_time" : 1000,
+  "fixation_time": 2000,
+  "fidback_time": 1000,
+  "timer_seconds":3,
+  "step_ssd":50,
+  "min_ssd":50,
+  "instructions": ["ברוך הבא לניסוי"
+    ,"המטלה המרכזית שלך היא להגיב לחיצים הלבנים שיופיעו על המסך"
+    ,"בכל פעם שיופיע חץ הפונה לשמאל, עליך להקיש על מקש החץ השמאלי במקלדת",
+  "בכל פעם שיופיע חץ הפונה לימין, עליך להקיש על מקש החץ הימני במקלדת",
+  "חץ לשמאל = מקש שמאלי, חץ לימין = מקש ימני",
+  "בחלק הפעמים, יופיע חץ בצבע כחול, במקרה כזה עליך לעכב את תגובתך ולא ללחוץ על המקלדת",
+  "חשוב מאוד שלא לחכות להופעת החץ הכחול ולהגיב במהירות ובדייקנות ככל הניתן לאורך כל הניסוי",
+  "'בכדי להתחיל בניסוי לחץ על הכפתור 'התחל"]
+}
