@@ -23,6 +23,7 @@ export default class ExperimentSST extends React.Component {
         button_start:true,
         start_creativity_block: false,
         start_sst_block: false,
+        end_of_experiment:false,
         count_down:false,
         instructions:true,
         block_remains:2,
@@ -51,8 +52,11 @@ export default class ExperimentSST extends React.Component {
 
     end_of_experiment = ()=>{
         this.setState(() => ({
+            to_start: false,
+            button_start:false,
             start_creativity_block: false,
             start_sst_block: false,
+            end_of_experiment:true,
             count_down:false
         })
         );
@@ -62,16 +66,19 @@ export default class ExperimentSST extends React.Component {
     end_of_sst_block = ()=>{
         console.log("end of sst block")
 
-        this.setState(() => ({
-            block_remains:this.state.block_remains-1,
-            start_sst_block:false,
-            count_down:true,
-            training_block:false      
-        })
-        );
         if (this.state.block_remains===0){
             return this.end_of_experiment()
         }
+
+        this.setState(() => ({
+            block_remains:this.state.block_remains-1,
+            start_sst_block:false,
+            count_down:false,
+            training_block:false,
+            start_creativity_block:true      
+        })
+        );
+        
     }
 
     start_blocks_session = ()=>{
@@ -116,6 +123,7 @@ export default class ExperimentSST extends React.Component {
                     arrows_distribution = {this.arrows_distribution[1]}
                     trials_amount={2}
                     block_number = {this.block_number}
+                    last_block = {this.state.block_remains===1}
                     />}
 
                 {
@@ -125,7 +133,10 @@ export default class ExperimentSST extends React.Component {
                     time = {2}
                     />
                 }
-
+                {
+                    this.state.end_of_experiment && 
+                    <p1>תודה על השתתפותך בניסוי. התוצאות נקלטו</p1>
+                }
             </div>
         )
     }

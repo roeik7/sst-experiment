@@ -2,8 +2,8 @@
   "blocks_amount":2,
   "trials_amount": 8,
   "training_trials_amount":4,
-  "questions": ["what is your nam?", "computer", "eye", "car", "water", "languege", "money", "sport"],
-  "answers": [["ro", "roei"], ["bla", "screen"], ["blue", "red"], ["audi", "nisan"], ["blue", "clean"], ["book", "english"],["dollar", "green"],["footbal", "ball"]],
+  "questions": ["test1?", "test2", "test3", "car", "water", "languege", "money", "sport"],
+  "answers": [["bla", "bla2"], ["1", "2"], ["blue", "red"], ["audi", "nisan"], ["blue", "clean"], ["book", "english"],["dollar", "green"],["footbal", "ball"]],
   "go_time": 2000,
   "ssd_time" : 750,
   "stop_signal_time" : 1000,
@@ -12,7 +12,7 @@
   "timer_seconds":3,
   "step_ssd":50,
   "min_ssd":50,
-  "instructions": ["-TESTברוך הבא לניסוי"
+  "instructions": ["ברוך הבא לניסוי"
     ,"המטלה המרכזית שלך היא להגיב לחיצים הלבנים שיופיעו על המסך"
     ,"בכל פעם שיופיע חץ הפונה לשמאל, עליך להקיש על מקש החץ השמאלי במקלדת",
   "בכל פעם שיופיע חץ הפונה לימין, עליך להקיש על מקש החץ הימני במקלדת",

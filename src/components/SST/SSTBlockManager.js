@@ -266,6 +266,7 @@ export default class SSTBlockManager extends React.Component {
                     missed_go_trials = {this.missed_go_trials}
                     correct_stops = {this.correct_stops}
                     stop_signals_amount = {this.stop_signals_amount}
+                    last_block = {this.props.last_block}
                     end_of_summary = {this.end_of_summary}                   
                     />
                 }
