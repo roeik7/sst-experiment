@@ -4,18 +4,21 @@ import StopTrial from './StopTrial';
 import FixationSign from '../UIElements/FixationSign';
 import TrialFidback from '../UIElements/TrialFidback';
 import SSTBlockSummary from '../UIElements/SSTBlockSummary';
-
+import Instructions from '../UIElements/Instructions';
 import ConfigData from '../../../Configurations/ConfigData.json';
+import CountDownTimer from '../UIElements/CountDownTimer';
 
 export default class SSTBlockManager extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            show_instructions:true,
+            count_down:true,
             curr_trial: -1,
             stop_trial: false,
             go_trial: false,
-            fixation: true,
+            fixation: false,
             trial_fidback: false,
             show_block_summary:false
         }
@@ -41,6 +44,8 @@ export default class SSTBlockManager extends React.Component {
         this.training_block = this.props.training_block
         this.step_ssd = ConfigData.step_ssd
         this.min_ssd = ConfigData.min_ssd
+        this.sst_instructions = ConfigData.sst_instructions
+        this.before_block_timer = ConfigData.before_block_timer
         
         //trials statistics
         this.go_trials_total_rt = 0
@@ -213,14 +218,33 @@ export default class SSTBlockManager extends React.Component {
         this.props.end_of_sst_block()
     }
 
+    start_blocks_session = ()=>{
+        this.setState(() => (
+            {
+                show_instructions:false,
+                count_down:false,
+                fixation: true,
+                to_start: true
+            }))
+    }
     render() {
         console.log(this.colors_combination)
         return (
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
+            <div>
+            {   
+                this.state.show_instructions &&
+                <Instructions
+                    instructions={this.sst_instructions}
+                />
+            }
+
+            {
+                this.state.count_down && <CountDownTimer
+                end_of_timer={this.start_blocks_session} 
+                message = {"הבלוק יתחיל בעוד:"}
+                time = {this.before_block_timer}
+                />
+            }
                 {this.state.fixation && <FixationSign
                     fixation_time={this.fixation_time}
                     on_fixation_end={this.on_fixation_end}

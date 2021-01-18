@@ -37,9 +37,9 @@ export default class ExperimentSST extends React.Component {
         this.setState(() => ({
             button_start:false,
             instructions:false,
-            count_down:true
         })
         );
+        this.start_blocks_session()
     };
 
     end_of_creativity_block = () => {
@@ -94,18 +94,22 @@ export default class ExperimentSST extends React.Component {
     render() {
         return (
             <div>
-                {this.state.instructions &&<Instructions
+                {
+                    //start experiment instructions
+                    this.state.instructions &&<Instructions
                     instructions={this.settings.instructions}
-                    to_start={this.state.to_start}
                 />}
 
-                {   this.state.button_start &&
+                {   
+                    this.state.button_start &&
                     <StartButton
                     start_button_clicked={this.start_button_clicked}
                     />
                 }
 
-                {this.state.start_creativity_block &&
+                
+                {   
+                    this.state.start_creativity_block &&
                     <CreativityBlockManager
                         end_of_creativity_block={this.end_of_creativity_block}
                         questions={this.settings.questions}
@@ -126,13 +130,6 @@ export default class ExperimentSST extends React.Component {
                     last_block = {this.state.block_remains===1}
                     />}
 
-                {
-                    this.state.count_down && <CountDownTimer
-                    end_of_timer={this.start_blocks_session} 
-                    message = {"הבלוק יתחיל בעוד:"}
-                    time = {2}
-                    />
-                }
                 {
                     this.state.end_of_experiment && 
                     <p1>תודה על השתתפותך בניסוי. התוצאות נקלטו</p1>

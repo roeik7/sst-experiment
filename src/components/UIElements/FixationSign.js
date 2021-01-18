@@ -5,14 +5,18 @@ export default class FixationSign extends React.Component {
 
     timeout_id = 0
 
-    get_fixation = () => {  
-        return (<div>
-                    <img className="fixation fixation-size" src={fixation_sign} height={50} width={50} />
-                </div>)
-                    
+    get_fixation = () => {
+        return (<div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}>
+            <img className="fixation fixation-size" src={fixation_sign} height={50} width={50} />
+        </div>)
+
     }
 
-    on_fixation_end = ()=>{
+    on_fixation_end = () => {
         this.props.on_fixation_end()
     }
 
@@ -22,7 +26,7 @@ export default class FixationSign extends React.Component {
             <div>
                 {this.get_fixation()}
             </div>
-            )
+        )
     }
 
 }

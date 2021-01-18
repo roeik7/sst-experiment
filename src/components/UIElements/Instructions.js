@@ -32,7 +32,7 @@ export default class Instructions extends React.Component {
                 alignItems: 'center',
                 justifyContent: 'center',
             }}>
-                { !this.props.to_start && this.get_instructions(this.props.instructions)}
+                {this.get_instructions(this.props.instructions)}
             </div>
         )
     }

@@ -4,6 +4,7 @@ import ConfigData from '../../../Configurations/ConfigData.json';
 
 export default class CountDownTimer extends React.Component{
 
+  //className='text big-text'
     state = {
         seconds: this.props.time
       }
@@ -11,12 +12,12 @@ export default class CountDownTimer extends React.Component{
       render() {
         const { seconds } = this.state
         return (
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-        }}>
-            <h1 className='text big-text'>{this.props.message}  { seconds }</h1>
+          <div>
+            <h1 style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+          }} className='text big-text' >{this.props.message}  { seconds }</h1>
           </div>
         )
       }

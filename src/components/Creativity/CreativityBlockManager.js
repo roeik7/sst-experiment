@@ -2,6 +2,8 @@ import React from 'react';
 import CreativityTrial from "./CreativityTrial";
 import FixationSign from '../UIElements/FixationSign';
 import ConfigData from '../../../Configurations/ConfigData.json';
+import Instructions from '../UIElements/Instructions';
+import CountDownTimer from '../UIElements/CountDownTimer';
 
 export default class CreativityBlockmanager extends React.Component {
 
@@ -9,14 +11,19 @@ export default class CreativityBlockmanager extends React.Component {
         super(props)
 
         this.state = {
+            show_instructions:true,
             curr_trial: -1,
             question_to_answers_map: [],
             fixation: true,
-            creativity_trial:false
+            creativity_trial: false,
+            to_start: false,
+            count_down:true
         }
 
-        this.settings ={
-            fixation_time: ConfigData.fixation_time
+        this.settings = {
+            fixation_time: ConfigData.fixation_time,
+            creativity_instructions: ConfigData.creativity_instructions,
+            before_block_timer: ConfigData.before_block_timer
         }
 
         this.questions = props.questions.slice(props.block_number, props.trials_amount)
@@ -48,7 +55,7 @@ export default class CreativityBlockmanager extends React.Component {
             this.setState(() => ({
                 curr_trial: this.state.curr_trial + 1,
                 fixation: true,
-                creativity_trial:false
+                creativity_trial: false
             })
             );
         }
@@ -66,7 +73,7 @@ export default class CreativityBlockmanager extends React.Component {
             this.setState(() => (
                 {
                     fixation: false,
-                    creativity_trial:true
+                    creativity_trial: true
                 })
             );
         }
@@ -76,25 +83,45 @@ export default class CreativityBlockmanager extends React.Component {
                 {
                     curr_trial: this.state.curr_trial + 1,
                     fixation: false,
-                    creativity_trial:true
+                    creativity_trial: true
                 })
             );
         }
     }
 
-    on_fixation_end = ()=>{
+    on_fixation_end = () => {
         this.increment_curr_trial()
+    }
+
+    start_blocks_session = ()=>{
+        this.setState(() => (
+            {
+                show_instructions:false,
+                count_down:false,
+                fixation: true,
+                to_start: true
+            }))
     }
 
     render() {
         return (
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
+            <div>
+                {   
+                    this.state.show_instructions &&
+                    <Instructions
+                        instructions={this.settings.creativity_instructions}
+                    />
+                }
+
                 {
-                    this.state.fixation && <FixationSign
+                    this.state.count_down && <CountDownTimer
+                    end_of_timer={this.start_blocks_session} 
+                    message = {"הבלוק יתחיל בעוד:"}
+                    time = {this.settings.before_block_timer}
+                    />
+                }
+                {
+                    this.state.to_start && this.state.fixation && <FixationSign
                         fixation_time={this.settings.fixation_time}
                         on_fixation_end={this.on_fixation_end}
                     />

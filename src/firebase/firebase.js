@@ -22,9 +22,42 @@ const test_function = (trial_data, serial_number) => {
     })
 }
 
+const add_to_creativity_table = (trial_data, serial_number)=>{
+    firebase.database().ref('creativity_trials').push({
+        id:serial_number,
+        block_number:trial_data.block_number,
+        correct:true,
+        rt:1500
+    })
+}
 
 
-test_function({ block_number: 1 }, 12)
+const add_to_sst_table = (trial_data, serial_number)=>{
+    firebase.database().ref('sst_trials').push({
+        id:serial_number,
+        block_number:trial_data.block_number,
+        correct:true,
+        rt:1500
+    })
+}
+
+add_to_creativity_table({
+    block_number: 1,
+}, 12)
+
+add_to_sst_table({
+    block_number: 2,
+}, 14)
+
+
+add_to_sst_table({
+    block_number: 0,
+}, 10)
+
+add_to_creativity_table({
+    block_number: 2,
+}, 14)
+
 
 //   firebase.database().ref('sst_trials').push({
 //       block_number:0,
