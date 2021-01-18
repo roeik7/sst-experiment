@@ -7,6 +7,7 @@ import SSTBlockSummary from '../UIElements/SSTBlockSummary';
 import Instructions from '../UIElements/Instructions';
 import ConfigData from '../../../Configurations/ConfigData.json';
 import CountDownTimer from '../UIElements/CountDownTimer';
+import {add_to_sst_table} from '../../firebase/firebase';
 
 export default class SSTBlockManager extends React.Component {
     constructor(props) {
@@ -117,7 +118,7 @@ export default class SSTBlockManager extends React.Component {
         let message = "";
 
         if (trial_data.type === "STOP_SIGNAL") {
-            message = trial_data.key === null ? this.correct_stop_msg : this.incorrect_stop_msg
+            message = trial_data.key === "none" ? this.correct_stop_msg : this.incorrect_stop_msg
         }
 
         else {
@@ -129,11 +130,15 @@ export default class SSTBlockManager extends React.Component {
     }
 
     end_of_go_trial = (trial_data) => {
-        const stop_trial = (trial_data.key === null && trial_data.type === "STOP_SIGNAL") ? true : false
+        const stop_trial = (trial_data.key === "none" && trial_data.type === "STOP_SIGNAL") ? true : false
         this.trial_fidback_text = this.compute_text_message(trial_data)
         
-        if(trial_data.type === "STOP_SIGNAL" && trial_data.key != null){
+        if(trial_data.type === "STOP_SIGNAL" && trial_data.key != "none"){
             this.ssd_time = Math.max(this.min_ssd, this.ssd_time-50)
+        }
+
+        if(!stop_trial){
+            add_to_sst_table(trial_data)
         }
 
         this.setState(() => ({
@@ -180,9 +185,9 @@ export default class SSTBlockManager extends React.Component {
         this.ssd_time = this.ssd_time+50
     }
 
-    end_of_ssd = (trial_data, timeout_id) => {
+    end_of_ssd = (trial_data) => {
         this.trial_fidback_text = this.compute_text_message(trial_data)
-        
+        add_to_sst_table(trial_data,1)
         this.setState(() => ({
             stop_trial: false,
             trial_fidback: true

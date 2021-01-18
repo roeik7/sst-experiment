@@ -29,10 +29,10 @@ export default class GoTrial extends React.Component {
         const trial_data = {
             type: "STOP_SIGNAL",
             side:(this.props.side === 0 ? "LEFT" : "RIGHT"),
-            key: null,
+            key: "none",
             rt:null,
             correct:true,
-            block_num:this.props.block_number,
+            block_num:this.props.block_number+1,
             req_SOA:this.props.stop_signal_time+this.props.go_time,
             true_SOA:this.props.stop_signal_time+this.props.go_time
         }
@@ -51,7 +51,7 @@ export default class GoTrial extends React.Component {
             key: keyboard.key,
             rt: null,
             correct: false,
-            block_num: this.props.block_number,
+            block_num: this.props.block_number+1,
             req_SOA: this.props.stop_signal_time+this.props.go_time,
             true_SOA: rt+ this.props.go_time
         }

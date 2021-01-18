@@ -66,8 +66,6 @@ export default class CreativityBlockmanager extends React.Component {
         return this.combination[curr_trial]
     }
 
-
-
     increment_curr_trial = () => {
         if (this.state.curr_trial + 1 === this.props.trials_amount) {
             this.setState(() => (
@@ -120,6 +118,7 @@ export default class CreativityBlockmanager extends React.Component {
                     time = {this.settings.before_block_timer}
                     />
                 }
+      
                 {
                     this.state.to_start && this.state.fixation && <FixationSign
                         fixation_time={this.settings.fixation_time}
