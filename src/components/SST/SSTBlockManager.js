@@ -207,7 +207,6 @@ export default class SSTBlockManager extends React.Component {
         );
     }
 
-
     block_summary = ()=>{
         this.setState(()=>({
             show_block_summary : true
@@ -233,7 +232,6 @@ export default class SSTBlockManager extends React.Component {
             }))
     }
     render() {
-        console.log(this.colors_combination)
         return (
             <div>
             {   

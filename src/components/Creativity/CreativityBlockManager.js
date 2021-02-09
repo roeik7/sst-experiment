@@ -23,37 +23,26 @@ export default class CreativityBlockmanager extends React.Component {
         this.settings = {
             fixation_time: ConfigData.fixation_time,
             creativity_instructions: ConfigData.creativity_instructions,
-            before_block_timer: ConfigData.before_block_timer
+            before_block_timer: ConfigData.before_block_timer,
+            creativity_time:ConfigData.creativity_time
         }
-
-        this.questions = props.questions.slice(props.block_number, props.trials_amount)
-        this.combination = this.create_answers_combination(props.block_number, props.trials_amount)
-
+        this.combination = this.props.indexes_combination.slice(this.props.block_number*this.props.trials_amount, (this.props.block_number+1)*this.props.trials_amount)
+        this.questions_order=[]
+        
         this.trials_data = []
-    }
-
-    create_answers_combination = (block_number, trials_amount) => {
-        let combination = Array(trials_amount).fill().map((item, index) => block_number * trials_amount + index);
-
-        for (let i = combination.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [combination[i], combination[j]] = [combination[j], combination[i]];
-        }
-
-        return combination
     }
 
 
     user_clicked = (trial_data) => {
         this.trials_data.push(trial_data)
-
+        console.log("rt = ",trial_data.rt)
         if (this.state.curr_trial + 1 === this.props.trials_amount) {
-            this.props.end_of_creativity_block()
+            this.questions_order = this.combination.toString().replace(/,/g,"|")
+            this.props.end_of_creativity_block(this.questions_order)
         }
 
         else {
             this.setState(() => ({
-                curr_trial: this.state.curr_trial + 1,
                 fixation: true,
                 creativity_trial: false
             })
@@ -62,7 +51,6 @@ export default class CreativityBlockmanager extends React.Component {
     }
 
     get_question_index = (curr_trial) => {
-        console.log("before calling to trail combination= " + this.combination)
         return this.combination[curr_trial]
     }
 
@@ -129,6 +117,8 @@ export default class CreativityBlockmanager extends React.Component {
                 {this.state.creativity_trial && <CreativityTrial
                     question={this.props.questions[this.get_question_index(this.state.curr_trial)]}
                     answers={this.props.answers[this.get_question_index(this.state.curr_trial)]}
+                    creativity_time = {this.settings.creativity_time}
+                    shuffle={this.props.shuffle_answers}
                     user_clicked={this.user_clicked}
                 />}
             </div>
