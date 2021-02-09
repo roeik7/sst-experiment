@@ -6,6 +6,9 @@ import CreativityBlockManager from './Creativity/CreativityBlockManager';
 import SSTBlockManager from './SST/SSTBlockManager';
 import CountDownTimer from './UIElements/CountDownTimer';
 import Configdata from '../../Configurations/ConfigData.json';
+import {add_to_creativity_summary} from '../firebase/firebase';
+
+
 
 export default class ExperimentSST extends React.Component {
     constructor(props) {
@@ -18,7 +21,7 @@ export default class ExperimentSST extends React.Component {
             answers: Configdata.answers,
             instructions: Configdata.instructions
         }
-        console.log("in ctor ansers=",this.settings.answers)
+
         this.state = {
             to_start: false,
             button_start: true,
@@ -30,6 +33,7 @@ export default class ExperimentSST extends React.Component {
             block_remains: 2,
             training_block: true
         }
+        this.questions_order = ""
         this.questions_indexes = this.shuffle_questions_indexes(0, this.settings.questions.length)
         this.arrows_distribution = ["FULL", "HALF", "THREE_QUARTERS_WHITE"]
         this.block_number = -1
@@ -65,7 +69,9 @@ export default class ExperimentSST extends React.Component {
         this.start_blocks_session()
     };
 
-    end_of_creativity_block = () => {
+    end_of_creativity_block = (i_questions_order) => {
+        this.questions_order = this.questions_order.concat(i_questions_order, "|")
+
         this.setState(() => ({
             start_creativity_block: false,
             start_sst_block: true
@@ -83,6 +89,8 @@ export default class ExperimentSST extends React.Component {
             count_down: false
         })
         );
+
+        add_to_creativity_summary({id:0,questions_order:this.questions_order})
         console.log("end of experiment!!!")
     }
 
@@ -137,7 +145,7 @@ export default class ExperimentSST extends React.Component {
                         answers={this.settings.answers}
                         trials_amount={3}
                         block_number={++this.block_number}
-                        indexes_combination = {this.questions_indexes}
+                        indexes_combination={this.questions_indexes}
                         shuffle_answers={this.shuffle_questions_indexes}
                     />
                 }
@@ -151,6 +159,7 @@ export default class ExperimentSST extends React.Component {
                         trials_amount={2}
                         block_number={this.block_number}
                         last_block={this.state.block_remains === 1}
+                        end_of_experiment={this.end_of_experiment}
                     />}
 
                 {

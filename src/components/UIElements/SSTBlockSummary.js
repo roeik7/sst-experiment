@@ -40,6 +40,10 @@ export default class SSTBlockSummary extends React.Component {
 
                     </div>
                 }
+                {
+                    this.props.last_block &&
+                    setTimeout(this.props.end_of_experiment,3000)
+                }
 
             </div >
         )

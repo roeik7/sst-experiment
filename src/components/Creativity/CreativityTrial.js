@@ -47,7 +47,7 @@ export default class CreativityTrial extends React.Component {
         let curr_rt = new(Date) - this.start
         let creativity_level = this.find_creativity_level(event.target.innerText, this.props.answers)
         this.props.user_clicked({
-            answer: creativity_level,
+            answer_level: creativity_level,
             answers_order:this.answers_indexes.toString().replace(/,/g,"|"),
             rt:curr_rt
         })

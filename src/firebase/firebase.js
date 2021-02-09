@@ -9,6 +9,7 @@ var firebaseConfig = {
     messagingSenderId: "491806222601",
     appId: "1:491806222601:web:cf7e9cead9466ac4244bd8"
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -22,17 +23,18 @@ const test_function = (trial_data, serial_number) => {
     })
 }
 
-const add_to_creativity_table = (trial_data, serial_number) => {
+const add_to_creativity_table = (trial_data) => {
     firebase.database().ref('creativity_trials').push({
-        id: serial_number,
-        block_number: trial_data.block_number,
-        correct: true,
-        rt: 1500
+        id:0,
+        question_number:trial_data.question,
+        answer_level: trial_data.answer_level,
+        answers_order:trial_data.answers_order,
+        rt:trial_data.rt
     })
 }
 
 
-const add_to_sst_table = (trial_data, serial_number) => {
+const add_to_sst_table = (trial_data) => {
     firebase.database().ref('sst_trials').push({
         type: trial_data.type,
         side: trial_data.side,
@@ -45,7 +47,15 @@ const add_to_sst_table = (trial_data, serial_number) => {
     })
 }
 
-export { add_to_creativity_table, add_to_sst_table }
+const add_to_creativity_summary = (creativity_task) => {
+    firebase.database().ref('creativity_summary').push({
+        id:creativity_task.id,
+        questions_order: creativity_task.questions_order
+    })
+}
+
+
+export { add_to_creativity_table, add_to_sst_table, add_to_creativity_summary }
 
 // add_to_creativity_table({
 //     block_number: 1,

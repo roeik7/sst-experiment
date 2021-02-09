@@ -4,6 +4,7 @@ import FixationSign from '../UIElements/FixationSign';
 import ConfigData from '../../../Configurations/ConfigData.json';
 import Instructions from '../UIElements/Instructions';
 import CountDownTimer from '../UIElements/CountDownTimer';
+import {add_to_creativity_table} from '../../firebase/firebase';
 
 export default class CreativityBlockmanager extends React.Component {
 
@@ -35,7 +36,10 @@ export default class CreativityBlockmanager extends React.Component {
 
     user_clicked = (trial_data) => {
         this.trials_data.push(trial_data)
-        console.log("rt = ",trial_data.rt)
+        trial_data["question"] = this.get_question_index(this.state.curr_trial)
+
+        add_to_creativity_table(trial_data)
+
         if (this.state.curr_trial + 1 === this.props.trials_amount) {
             this.questions_order = this.combination.toString().replace(/,/g,"|")
             this.props.end_of_creativity_block(this.questions_order)
